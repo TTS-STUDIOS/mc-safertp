@@ -36,8 +36,10 @@ menu:
     world: GRASS_BLOCK
     world_nether: NETHERRACK
     world_the_end: END_STONE
-  # Optional item_model per world (1.21.4+ with a resource pack), e.g.
-  #   world: "mypack:menu/rtp_overworld". Older clients see the icon above.
+  # Resource-pack art for the buttons. custom-model-data keeps the vanilla
+  # icon above for players without the pack (recommended); item_model
+  # (1.21.4+) replaces the item, so without the pack it shows a missing model.
+  custom-model-data: {}
   models: {}
   # Extra lore lines per world (MiniMessage), e.g. a warning:
   #   world_the_end: "<red>Dangerous: endermen and the void. Bring gear."

@@ -48,6 +48,7 @@ menu:
     world: GRASS_BLOCK
     world_nether: NETHERRACK
     world_the_end: END_STONE
+  custom-model-data: {}  # per world, e.g. world: 7201 — the pack redraws the vanilla icon (safe without the pack)
   models: {}             # optional item_model per world (1.21.4+), e.g. world: "mypack:menu/rtp_overworld"
   notes: {}              # extra lore lines per world, e.g. world_the_end: "<red>Dangerous: bring gear."
 ```

@@ -48,6 +48,7 @@ menu:
     world: GRASS_BLOCK
     world_nether: NETHERRACK
     world_the_end: END_STONE
+  custom-model-data: {}  # por mundo, p. ej. world: 7201 — el pack redibuja el icono vanilla (sin pack se ve bien)
   models: {}             # item_model opcional por mundo (1.21.4+), p. ej. world: "mipack:menu/rtp_overworld"
   notes: {}              # líneas de lore extra por mundo, p. ej. world_the_end: "<red>Peligroso: lleva equipo."
 ```

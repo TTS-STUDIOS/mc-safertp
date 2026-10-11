@@ -38,7 +38,7 @@ class RtpMenuTest {
     @Test
     void settingsReadFromConfig() throws Exception {
         YamlConfiguration cfg = new YamlConfiguration();
-        cfg.loadFromString("menu:\n  enabled: false\n  rows: 4\n  title: \"<white>\\uE030\"\n  slots:\n    world: 20\n  models:\n    world: \"tiamat:menu/rtp_overworld\"\n");
+        cfg.loadFromString("menu:\n  enabled: false\n  rows: 4\n  title: \"<white>\\uE030\"\n  slots:\n    world: 20\n  models:\n    world: \"tiamat:menu/rtp_overworld\"\n  notes:\n    world_the_end: \"<red>Peligro\"\n");
         RtpMenu.Settings s = RtpMenu.Settings.from(cfg.getConfigurationSection("menu"));
         assertFalse(s.enabled());
         assertEquals(4, s.rows());
@@ -46,6 +46,7 @@ class RtpMenuTest {
         assertEquals(13, s.slots().get("world_nether"));
         assertEquals("<white>", s.title());
         assertEquals("tiamat:menu/rtp_overworld", s.models().get("world"));
+        assertEquals(List.of("<red>Peligro"), s.notes().get("world_the_end"));
     }
 
     @Test

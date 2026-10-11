@@ -10,7 +10,7 @@ follows semantic versioning.
 - **Destination menu.** `/rtp` without a world opens a menu with one button per enabled world the
   player may use (overworld, Nether, End...), showing its distance, cost and wait. `/rtp <world>`
   still goes straight there. Rows, title (MiniMessage, resource-pack glyphs and `<lang_or>` allowed),
-  button slots, icons and optional `item_model`s (`menu.models`, 1.21.4+) are in `menu:` of config.yml; `menu.enabled: false` keeps the old `/rtp`.
+  button slots, icons and optional `item_model`s (`menu.models`, 1.21.4+) and extra lore per world (`menu.notes`, e.g. a warning for the End) are in `menu:` of config.yml; `menu.enabled: false` keeps the old `/rtp`.
   A title that draws its own background leaves the glass frame out (tts-sdk 0.13.5).
 
 ## [1.4.3] — 2026-10-10

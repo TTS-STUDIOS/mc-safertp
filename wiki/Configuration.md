@@ -49,6 +49,7 @@ menu:
     world_nether: NETHERRACK
     world_the_end: END_STONE
   models: {}             # optional item_model per world (1.21.4+), e.g. world: "mypack:menu/rtp_overworld"
+  notes: {}              # extra lore lines per world, e.g. world_the_end: "<red>Dangerous: bring gear."
 ```
 
 A title that draws its own background (a resource-pack glyph, `<lang_or>`, `<font>`) leaves the glass

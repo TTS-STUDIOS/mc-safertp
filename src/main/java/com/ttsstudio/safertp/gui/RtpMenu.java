@@ -36,10 +36,10 @@ public final class RtpMenu {
     /** Menu settings from config.yml {@code menu:}. */
     public record Settings(boolean enabled, int rows, String title, Map<String, Integer> slots,
                            Map<String, String> icons, Map<String, String> models,
-                           Map<String, List<String>> notes) {
+                           Map<String, List<String>> notes, Map<String, Integer> modelData) {
 
         public static Settings from(ConfigurationSection menu) {
-            if (menu == null) return new Settings(true, 3, "", defaultSlots(), defaultIcons(), Map.of(), Map.of());
+            if (menu == null) return new Settings(true, 3, "", defaultSlots(), defaultIcons(), Map.of(), Map.of(), Map.of());
             Map<String, Integer> slots = new LinkedHashMap<>(defaultSlots());
             ConfigurationSection s = menu.getConfigurationSection("slots");
             if (s != null) for (String k : s.getKeys(false)) slots.put(k, s.getInt(k));
@@ -57,9 +57,12 @@ public final class RtpMenu {
                     notes.put(k, lines);
                 }
             }
+            Map<String, Integer> modelData = new LinkedHashMap<>();
+            ConfigurationSection cmd = menu.getConfigurationSection("custom-model-data");
+            if (cmd != null) for (String k : cmd.getKeys(false)) modelData.put(k, cmd.getInt(k));
             int rows = Math.max(1, Math.min(6, menu.getInt("rows", 3)));
             return new Settings(menu.getBoolean("enabled", true), rows, menu.getString("title", ""), slots, icons, models,
-                notes);
+                notes, modelData);
         }
 
         static Map<String, Integer> defaultSlots() {
@@ -142,12 +145,24 @@ public final class RtpMenu {
         lore.add(MM.deserialize(text.apply(new String[]{"menu-click"})));
         Items.name(meta, MM.deserialize(text.apply(new String[]{"menu-world", "world", e.name()})));
         Items.lore(meta, lore);
+        customModelData(meta, settings.modelData().getOrDefault(e.world(), 0));
         itemModel(meta, settings.models().get(e.world()));
         stack.setItemMeta(meta);
         return stack;
     }
 
-    /** {@code item_model} (1.21.4+) from {@code menu.models}; older servers keep the plain icon. */
+    /** Vanilla icon + custom-model-data: a resource pack redraws it, without the pack it stays the icon. */
+    static void customModelData(ItemMeta meta, int cmd) {
+        if (meta == null || cmd <= 0) return;
+        java.lang.reflect.Method set = com.ttsstudio.sdk.compat.Reflect.findMethod(ItemMeta.class, "setCustomModelData",
+            Integer.class);
+        if (set != null) com.ttsstudio.sdk.compat.Reflect.invoke(set, meta, cmd);
+    }
+
+    /**
+     * {@code item_model} (1.21.4+) from {@code menu.models}. A client without the pack draws a missing model
+     * for it: prefer {@code custom-model-data} on the vanilla icon for anything that must look right without the pack.
+     */
     static void itemModel(ItemMeta meta, String model) {
         if (meta == null || model == null || model.isBlank()) return;
         org.bukkit.NamespacedKey key = org.bukkit.NamespacedKey.fromString(model.trim().toLowerCase(java.util.Locale.ROOT));

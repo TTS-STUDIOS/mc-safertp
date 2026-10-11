@@ -35,10 +35,11 @@ public final class RtpMenu {
 
     /** Menu settings from config.yml {@code menu:}. */
     public record Settings(boolean enabled, int rows, String title, Map<String, Integer> slots,
-                           Map<String, String> icons, Map<String, String> models) {
+                           Map<String, String> icons, Map<String, String> models,
+                           Map<String, List<String>> notes) {
 
         public static Settings from(ConfigurationSection menu) {
-            if (menu == null) return new Settings(true, 3, "", defaultSlots(), defaultIcons(), Map.of());
+            if (menu == null) return new Settings(true, 3, "", defaultSlots(), defaultIcons(), Map.of(), Map.of());
             Map<String, Integer> slots = new LinkedHashMap<>(defaultSlots());
             ConfigurationSection s = menu.getConfigurationSection("slots");
             if (s != null) for (String k : s.getKeys(false)) slots.put(k, s.getInt(k));
@@ -48,8 +49,17 @@ public final class RtpMenu {
             Map<String, String> models = new LinkedHashMap<>();
             ConfigurationSection m = menu.getConfigurationSection("models");
             if (m != null) for (String k : m.getKeys(false)) models.put(k, m.getString(k));
+            Map<String, List<String>> notes = new LinkedHashMap<>();
+            ConfigurationSection n = menu.getConfigurationSection("notes");
+            if (n != null) {
+                for (String k : n.getKeys(false)) {
+                    List<String> lines = n.isList(k) ? n.getStringList(k) : List.of(n.getString(k, ""));
+                    notes.put(k, lines);
+                }
+            }
             int rows = Math.max(1, Math.min(6, menu.getInt("rows", 3)));
-            return new Settings(menu.getBoolean("enabled", true), rows, menu.getString("title", ""), slots, icons, models);
+            return new Settings(menu.getBoolean("enabled", true), rows, menu.getString("title", ""), slots, icons, models,
+                notes);
         }
 
         static Map<String, Integer> defaultSlots() {
@@ -125,6 +135,9 @@ public final class RtpMenu {
         lore.add(MM.deserialize(e.waitSeconds() > 0
             ? text.apply(new String[]{"menu-wait", "seconds", String.valueOf(e.waitSeconds())})
             : text.apply(new String[]{"menu-ready"})));
+        for (String note : settings.notes().getOrDefault(e.world(), List.of())) {
+            if (!note.isBlank()) lore.add(MM.deserialize(note));
+        }
         lore.add(Component.empty());
         lore.add(MM.deserialize(text.apply(new String[]{"menu-click"})));
         Items.name(meta, MM.deserialize(text.apply(new String[]{"menu-world", "world", e.name()})));

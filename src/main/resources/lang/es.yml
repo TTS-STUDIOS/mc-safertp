@@ -30,6 +30,15 @@ discovery-title: "<gold><bold>¡Nuevo Descubrimiento!</bold></gold>"
 discovery-subtitle: "<yellow><biome></yellow>"
 discovery-chat: "<gray>Has descubierto un nuevo bioma: <yellow><biome></yellow>"
 
+# Menú de destinos (/rtp sin mundo)
+menu-title: "<gold>Viaje aleatorio"
+menu-world: "<gold><bold><world>"
+menu-radius: "<gray>Distancia: <white><min> - <max> bloques"
+menu-cost: "<gray>Coste: <yellow><amount>"
+menu-wait: "<gray>Disponible en: <yellow><seconds> s"
+menu-ready: "<green>Listo para viajar"
+menu-click: "<yellow>▸ Clic para viajar"
+
 # Nombre de cada mundo en los mensajes. Un mundo sin entrada sale con su id.
 world-names:
   world: "Mundo"

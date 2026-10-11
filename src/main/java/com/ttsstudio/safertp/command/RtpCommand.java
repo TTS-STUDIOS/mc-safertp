@@ -97,6 +97,10 @@ public class RtpCommand implements CommandExecutor {
             return true;
         }
 
+        if (args.length == 0 && plugin.getConfigManager().menu().enabled() && openMenu(player)) {
+            return true;
+        }
+
         World world = player.getWorld();
         if (args.length == 0) {
             world = resolveDefaultWorld(world);
@@ -117,6 +121,37 @@ public class RtpCommand implements CommandExecutor {
         }
 
         doRtp(player, world, false);
+        return true;
+    }
+
+    /** The destination menu; false when no world can be offered (the plain /rtp runs instead). */
+    private boolean openMenu(Player player) {
+        var settings = plugin.getConfigManager().menu();
+        long wait = player.hasPermission("safertp.bypass.cooldown") ? 0
+            : Math.max(0, plugin.getCooldownManager().getRemaining(player.getUniqueId()));
+        java.util.List<com.ttsstudio.safertp.gui.RtpMenu.Entry> entries = new java.util.ArrayList<>();
+        for (WorldConfig c : plugin.getWorldConfigRegistry().all()) {
+            World w = Bukkit.getWorld(c.worldName());
+            if (!c.enabled() || w == null) continue;
+            String node = WorldPermission.ensureRegistered(Bukkit.getPluginManager(), w.getName());
+            if (!player.hasPermission(node) && !player.hasPermission("safertp.admin")) continue;
+            entries.add(com.ttsstudio.safertp.gui.RtpMenu.entry(c, worldName(w), settings, wait));
+        }
+        if (entries.isEmpty()) return false;
+        com.ttsstudio.safertp.gui.RtpMenu.open(plugin.guiRouter(), player, settings, entries, msg("menu-title"),
+            a -> {
+                java.util.Map<String, String> ph = new java.util.HashMap<>();
+                for (int i = 1; i + 1 < a.length; i += 2) ph.put(a[i], a[i + 1]);
+                return plugin.getMessagesConfig().get(a[0], ph);
+            },
+            (p, worldName) -> {
+                World w = Bukkit.getWorld(worldName);
+                if (w == null) {
+                    ChatPrefix.send(p, identity, msg("rtp-world-disabled"));
+                    return;
+                }
+                doRtp(p, w, false);
+            });
         return true;
     }
 

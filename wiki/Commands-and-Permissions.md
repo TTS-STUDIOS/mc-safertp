@@ -10,7 +10,7 @@ All SafeRTP functionality is exposed via the `/rtp` base command (aliases: `/ran
 
 | Command | Description | Permission Required |
 |---------|-------------|---------------------|
-| `/rtp` | Teleport yourself to a random safe location in your current world | `safertp.use` |
+| `/rtp` | Open the destination menu (one button per world; `menu.enabled: false` = straight to a random safe spot in your world) | `safertp.use` |
 | `/rtp <world>` | Teleport yourself into a specific world | `safertp.use` + `safertp.world.<name>` |
 | `/rtp other <player>` | Teleport another player (bypasses their cooldown) | `safertp.admin` |
 | `/rtp reload` | Hot-reload `config.yml`, `worlds.yml`, and `messages.yml` | `safertp.admin` |

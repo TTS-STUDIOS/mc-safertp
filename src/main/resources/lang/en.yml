@@ -33,5 +33,14 @@ discovery-chat: "<gray>You've discovered a new biome: <yellow><biome></yellow>"
 # Biome name shown in the notices (optional). Without an entry each player sees
 # it in their own game language. Example:  biome-names: { cherry_grove: "Cherry Grove" }
 
+# Destination menu (/rtp without a world)
+menu-title: "<gold>Random teleport"
+menu-world: "<gold><bold><world>"
+menu-radius: "<gray>Distance: <white><min> - <max> blocks"
+menu-cost: "<gray>Cost: <yellow><amount>"
+menu-wait: "<gray>Ready in: <yellow><seconds> s"
+menu-ready: "<green>Ready to go"
+menu-click: "<yellow>▸ Click to travel"
+
 # Display name of a world in the messages (optional). Without an entry the
 # world id is shown. Example:  world-names: { world: "Overworld" }

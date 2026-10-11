@@ -30,6 +30,7 @@ public final class SafeRtpPlugin extends JavaPlugin {
     private static final long BACK_PURGE_INTERVAL_TICKS = 20L * 60L; // every 60s
 
     private ConfigManager configManager;
+    private final com.ttsstudio.sdk.gui.GuiClickRouter guiRouter = new com.ttsstudio.sdk.gui.GuiClickRouter();
     private MessageManager messageManager;
     private WorldConfigRegistry worldConfigRegistry;
     private CooldownManager cooldownManager;
@@ -103,6 +104,7 @@ public final class SafeRtpPlugin extends JavaPlugin {
         }
 
         getServer().getPluginManager().registerEvents(new WarmupListener(this), this);
+        getServer().getPluginManager().registerEvents(guiRouter, this);
 
         var rtpExecutor = new RtpCommand(this);
         var cmd = getCommand("rtp");
@@ -149,6 +151,7 @@ public final class SafeRtpPlugin extends JavaPlugin {
     }
 
     public ConfigManager getConfigManager()            { return configManager; }
+    public com.ttsstudio.sdk.gui.GuiClickRouter guiRouter() { return guiRouter; }
     public MessageManager getMessages()                { return messageManager; }
     /** Back-compat alias — call sites using .getString() compile unchanged. */
     public MessageManager getMessagesConfig()          { return messageManager; }

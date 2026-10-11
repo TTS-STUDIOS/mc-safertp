@@ -29,6 +29,11 @@ public final class ConfigManager {
     /** World used by a bare /rtp when the player's current world has RTP disabled (empty = none). */
     public String defaultWorld() { return cfg.getString("default-world", ""); }
 
+    /** /rtp without a world: the destination menu ({@code menu:}). */
+    public com.ttsstudio.safertp.gui.RtpMenu.Settings menu() {
+        return com.ttsstudio.safertp.gui.RtpMenu.Settings.from(cfg.getConfigurationSection("menu"));
+    }
+
     // ─── Back ─────────────────────────────────────────────────────────────────
     public boolean backEnabled()        { return cfg.getBoolean("back.enabled", true); }
     public long    backTtlSeconds()     { return cfg.getLong("back.ttl-seconds", 300L); }

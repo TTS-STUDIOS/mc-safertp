@@ -10,7 +10,7 @@ Toda la funcionalidad de SafeRTP se expone a través del comando base `/rtp` (al
 
 | Comando | Descripción | Permiso Requerido |
 |---------|-------------|-------------------|
-| `/rtp` | Teletransportarte a una ubicación aleatoria y segura en tu mundo actual | `safertp.use` |
+| `/rtp` | Abre el menú de destinos (un botón por mundo; con `menu.enabled: false`, directo a un sitio seguro de tu mundo) | `safertp.use` |
 | `/rtp <mundo>` | Teletransportarte a un mundo específico | `safertp.use` + `safertp.world.<nombre>` |
 | `/rtp other <jugador>` | Teletransportar a otro jugador (omite su enfriamiento) | `safertp.admin` |
 | `/rtp reload` | Recarga en caliente `config.yml`, `worlds.yml` y `messages.yml` | `safertp.admin` |

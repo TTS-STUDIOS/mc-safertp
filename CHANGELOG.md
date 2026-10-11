@@ -4,6 +4,15 @@ All notable changes to SafeRTP are documented in this file. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project
 follows semantic versioning.
 
+## [1.5.0] — 2026-10-11
+
+### Added
+- **Destination menu.** `/rtp` without a world opens a menu with one button per enabled world the
+  player may use (overworld, Nether, End...), showing its distance, cost and wait. `/rtp <world>`
+  still goes straight there. Rows, title (MiniMessage, resource-pack glyphs and `<lang_or>` allowed),
+  button slots and icons are in `menu:` of config.yml; `menu.enabled: false` keeps the old `/rtp`.
+  A title that draws its own background leaves the glass frame out (tts-sdk 0.13.5).
+
 ## [1.4.3] — 2026-10-10
 
 ### Fixed

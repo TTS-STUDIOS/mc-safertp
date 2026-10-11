@@ -30,6 +30,29 @@ config-version: 1
 
 ---
 
+## 🧭 Destination menu (`menu:`, 1.5.0)
+
+`/rtp` without a world opens a menu with one button per enabled world (from `worlds.yml`) the player
+may use, showing its distance, cost and wait. `/rtp <world>` still goes straight there.
+
+```yaml
+menu:
+  enabled: true          # false = /rtp works as before 1.5.0
+  rows: 3
+  title: ""              # empty = menu-title from the lang file; MiniMessage, pack glyphs and <lang_or> allowed
+  slots:                 # button slot per world (0 = top left); unlisted worlds take a free middle slot
+    world: 11
+    world_nether: 13
+    world_the_end: 15
+  icons:
+    world: GRASS_BLOCK
+    world_nether: NETHERRACK
+    world_the_end: END_STONE
+```
+
+A title that draws its own background (a resource-pack glyph, `<lang_or>`, `<font>`) leaves the glass
+frame out (tts-sdk 0.13.5).
+
 ## 🌍 worlds.yml
 
 The heart of SafeRTP. Defines which worlds are RTP-enabled and how the random location is chosen.

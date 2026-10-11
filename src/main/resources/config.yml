@@ -36,6 +36,9 @@ menu:
     world: GRASS_BLOCK
     world_nether: NETHERRACK
     world_the_end: END_STONE
+  # Optional item_model per world (1.21.4+ with a resource pack), e.g.
+  #   world: "mypack:menu/rtp_overworld". Older clients see the icon above.
+  models: {}
 
 # ============================================================
 # BACK COMMAND  (v1.1.0)

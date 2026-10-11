@@ -35,18 +35,21 @@ public final class RtpMenu {
 
     /** Menu settings from config.yml {@code menu:}. */
     public record Settings(boolean enabled, int rows, String title, Map<String, Integer> slots,
-                           Map<String, String> icons) {
+                           Map<String, String> icons, Map<String, String> models) {
 
         public static Settings from(ConfigurationSection menu) {
-            if (menu == null) return new Settings(true, 3, "", defaultSlots(), defaultIcons());
+            if (menu == null) return new Settings(true, 3, "", defaultSlots(), defaultIcons(), Map.of());
             Map<String, Integer> slots = new LinkedHashMap<>(defaultSlots());
             ConfigurationSection s = menu.getConfigurationSection("slots");
             if (s != null) for (String k : s.getKeys(false)) slots.put(k, s.getInt(k));
             Map<String, String> icons = new LinkedHashMap<>(defaultIcons());
             ConfigurationSection i = menu.getConfigurationSection("icons");
             if (i != null) for (String k : i.getKeys(false)) icons.put(k, i.getString(k));
+            Map<String, String> models = new LinkedHashMap<>();
+            ConfigurationSection m = menu.getConfigurationSection("models");
+            if (m != null) for (String k : m.getKeys(false)) models.put(k, m.getString(k));
             int rows = Math.max(1, Math.min(6, menu.getInt("rows", 3)));
-            return new Settings(menu.getBoolean("enabled", true), rows, menu.getString("title", ""), slots, icons);
+            return new Settings(menu.getBoolean("enabled", true), rows, menu.getString("title", ""), slots, icons, models);
         }
 
         static Map<String, Integer> defaultSlots() {
@@ -126,8 +129,19 @@ public final class RtpMenu {
         lore.add(MM.deserialize(text.apply(new String[]{"menu-click"})));
         Items.name(meta, MM.deserialize(text.apply(new String[]{"menu-world", "world", e.name()})));
         Items.lore(meta, lore);
+        itemModel(meta, settings.models().get(e.world()));
         stack.setItemMeta(meta);
         return stack;
+    }
+
+    /** {@code item_model} (1.21.4+) from {@code menu.models}; older servers keep the plain icon. */
+    static void itemModel(ItemMeta meta, String model) {
+        if (meta == null || model == null || model.isBlank()) return;
+        org.bukkit.NamespacedKey key = org.bukkit.NamespacedKey.fromString(model.trim().toLowerCase(java.util.Locale.ROOT));
+        java.lang.reflect.Method set = com.ttsstudio.sdk.compat.Reflect.findMethod(ItemMeta.class, "setItemModel",
+            org.bukkit.NamespacedKey.class);
+        if (key == null || set == null) return;
+        com.ttsstudio.sdk.compat.Reflect.invoke(set, meta, key);
     }
 
     /** Entry for a configured world, from its settings. */

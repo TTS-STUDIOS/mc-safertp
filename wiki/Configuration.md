@@ -48,6 +48,7 @@ menu:
     world: GRASS_BLOCK
     world_nether: NETHERRACK
     world_the_end: END_STONE
+  models: {}             # optional item_model per world (1.21.4+), e.g. world: "mypack:menu/rtp_overworld"
 ```
 
 A title that draws its own background (a resource-pack glyph, `<lang_or>`, `<font>`) leaves the glass

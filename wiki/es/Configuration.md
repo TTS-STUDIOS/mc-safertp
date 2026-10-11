@@ -48,6 +48,7 @@ menu:
     world: GRASS_BLOCK
     world_nether: NETHERRACK
     world_the_end: END_STONE
+  models: {}             # item_model opcional por mundo (1.21.4+), p. ej. world: "mipack:menu/rtp_overworld"
 ```
 
 Un título que pinta su propio fondo (glifo del pack, `<lang_or>`, `<font>`) quita el marco de cristal

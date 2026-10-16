@@ -4,6 +4,16 @@ All notable changes to SafeRTP are documented in this file. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project
 follows semantic versioning.
 
+## [1.6.0] — 2026-10-16
+
+### Added
+- **Portal RTP.** A vanilla Nether portal's own linked destination is a fixed point that can end
+  up outside the world border, in lava, or anywhere else a world gets reshaped — `worlds.yml`'s
+  new `portal-rtp.worlds` section redirects a portal used from a given world to a random safe spot
+  in a target world instead, reusing that target's own radius/biome settings. Off by default: list
+  a source world (with its `target` and an optional `cooldown-seconds`, default 60) to turn it on.
+  `safertp.bypass.cooldown` also bypasses this cooldown.
+
 ## [1.5.0] — 2026-10-11
 
 ### Added

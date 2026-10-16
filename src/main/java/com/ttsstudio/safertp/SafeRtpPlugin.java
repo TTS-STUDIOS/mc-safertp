@@ -12,6 +12,7 @@ import com.ttsstudio.safertp.finder.LocationFinder;
 import com.ttsstudio.safertp.integration.PapiHook;
 import com.ttsstudio.safertp.integration.VaultHook;
 import com.ttsstudio.safertp.integration.WorldGuardHook;
+import com.ttsstudio.safertp.listener.PortalRtpListener;
 import com.ttsstudio.safertp.listener.WarmupListener;
 import com.ttsstudio.safertp.manager.CooldownManager;
 import com.ttsstudio.safertp.manager.WarmupManager;
@@ -104,6 +105,7 @@ public final class SafeRtpPlugin extends JavaPlugin {
         }
 
         getServer().getPluginManager().registerEvents(new WarmupListener(this), this);
+        getServer().getPluginManager().registerEvents(new PortalRtpListener(this), this);
         getServer().getPluginManager().registerEvents(guiRouter, this);
 
         var rtpExecutor = new RtpCommand(this);
@@ -121,6 +123,8 @@ public final class SafeRtpPlugin extends JavaPlugin {
 
         ConsoleBanner.enable(this, PluginIdentity.of(this))
             .status(worldConfigRegistry.size() + " world(s)")
+            .hook(worldConfigRegistry.portalRtpCount() > 0
+                ? "Portal-RTP x" + worldConfigRegistry.portalRtpCount() : null)
             .hook(vaultHook != null ? "Vault" : null)
             .hook(getServer().getPluginManager().isPluginEnabled("PlaceholderAPI") ? "PAPI" : null)
             .hook(configManager.backEnabled() ? "Back" : null)

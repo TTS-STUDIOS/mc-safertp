@@ -24,6 +24,21 @@ worlds:
   world_the_end:
     enabled: false
 
+# Redirects a vanilla Nether portal used from a source world to a random safe spot in a
+# target world, instead of the portal's own linked destination (which can drift outside the
+# world border, or into lava/bedrock). Off by default — list a world below to turn it on.
+# The target world still needs its own entry above (radius, biome filters); that entry's own
+# "enabled" does not matter here — being listed under portal-rtp.worlds is the gate.
+#
+# Example — Nether portals from "spawn" send players to a safe spot in "world_nether":
+#   portal-rtp:
+#     worlds:
+#       spawn:
+#         target: world_nether
+#         cooldown-seconds: 60
+portal-rtp:
+  worlds: {}
+
 # Default cooldown in seconds. Overridable per-player via safertp.cooldown.<n> permission
 cooldown-default: 300
 

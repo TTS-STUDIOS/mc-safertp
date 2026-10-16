@@ -16,6 +16,7 @@ public class WorldConfigRegistry {
 
     private final SafeRtpPlugin plugin;
     private final Map<String, WorldConfig> configs = new LinkedHashMap<>();
+    private final Map<String, PortalRtpConfig> portalRtpConfigs = new LinkedHashMap<>();
     private int defaultCooldown = 300;
     private int warmupSeconds = 5;
 
@@ -55,7 +56,32 @@ public class WorldConfigRegistry {
                 sec.getDouble("cost", 0)
             ));
         }
+
+        portalRtpConfigs.clear();
+        ConfigurationSection portalRtpSec = cfg.getConfigurationSection("portal-rtp.worlds");
+        portalRtpConfigs.putAll(parsePortalRtp(portalRtpSec));
+        if (portalRtpSec != null) {
+            for (String source : portalRtpSec.getKeys(false)) {
+                if (!portalRtpConfigs.containsKey(source)) {
+                    PluginLog.of(plugin).warn("portal-rtp.worlds.{} has no target world, skipping.", source);
+                }
+            }
+        }
+
         PluginLog.of(plugin).info("Loaded {} world configs.", configs.size());
+    }
+
+    /** Pure parse of {@code portal-rtp.worlds}: no plugin needed, so it is unit-testable directly. */
+    static Map<String, PortalRtpConfig> parsePortalRtp(ConfigurationSection worldsSection) {
+        Map<String, PortalRtpConfig> result = new LinkedHashMap<>();
+        if (worldsSection == null) return result;
+        for (String source : worldsSection.getKeys(false)) {
+            ConfigurationSection sec = worldsSection.getConfigurationSection(source);
+            String target = sec == null ? null : sec.getString("target", "");
+            if (target == null || target.isBlank()) continue;
+            result.put(source, new PortalRtpConfig(source, target, sec.getLong("cooldown-seconds", 60L)));
+        }
+        return result;
     }
 
     private Set<Biome> parseBiomes(List<String> names) {
@@ -77,6 +103,11 @@ public class WorldConfigRegistry {
         return Optional.ofNullable(configs.get(worldName));
     }
 
+    /** The portal-rtp redirect configured for a source world, if any (off by default). */
+    public Optional<PortalRtpConfig> portalRtp(String sourceWorldName) {
+        return Optional.ofNullable(portalRtpConfigs.get(sourceWorldName));
+    }
+
     public java.util.Collection<WorldConfig> all() {
         return java.util.Collections.unmodifiableCollection(configs.values());
     }
@@ -84,4 +115,5 @@ public class WorldConfigRegistry {
     public int getDefaultCooldown() { return defaultCooldown; }
     public int getWarmupSeconds()   { return warmupSeconds; }
     public int size()               { return configs.size(); }
+    public int portalRtpCount()     { return portalRtpConfigs.size(); }
 }

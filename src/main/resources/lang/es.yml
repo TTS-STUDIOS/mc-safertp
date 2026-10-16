@@ -19,6 +19,12 @@ rtp-other-success: "<green>Teletransportaste a <player> a <world>."
 reload-success: "<green>SafeRTP recargado correctamente."
 players-only: "<red>Solo para jugadores."
 
+# RTP de portal (portal-rtp en worlds.yml)
+portal-rtp-searching: "<gray>Buscando una zona segura en el Nether..."
+portal-rtp-success: "<green>¡Teletransportado a una zona segura (<x>, <y>, <z>)!"
+portal-rtp-cooldown: "<red>Debes esperar <seconds> s antes de usar este portal de nuevo."
+portal-rtp-no-safe-location: "<red>No se encontró una ubicación segura. Inténtalo de nuevo."
+
 # /rtp back
 back-success: "<green>Has vuelto a tu ubicación anterior."
 back-no-location: "<red>No hay una ubicación anterior disponible (puede haber expirado)."

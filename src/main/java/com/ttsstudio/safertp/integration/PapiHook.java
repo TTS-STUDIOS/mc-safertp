@@ -15,7 +15,7 @@ public class PapiHook extends PlaceholderExpansion {
     }
 
     @Override public @NotNull String getIdentifier() { return "safertp"; }
-    @Override public @NotNull String getAuthor()     { return "Cristian"; }
+    @Override public @NotNull String getAuthor()     { return "TTS-Studio"; }
     @Override public @NotNull String getVersion()    { return plugin.getDescription().getVersion(); }
     @Override public boolean persist()               { return true; }
 

@@ -11,7 +11,7 @@
 
 > **Teletransporte aleatorio asíncrono y seguro para Paper y Spigot, de 1.17 a 26.x** — la distribución anular evita la acumulación cerca del spawn, los filtros de bioma y material mantienen a los jugadores fuera de la lava y los océanos, y un solo comando **`/rtp back`** deshace el salto cuando la naturaleza no era lo esperado.
 
-> 🌍 Presentado por **[TTS-Studio](https://github.com/TheCuouz)** — parte de la suite unificada de plugins TTS-Studio.
+> 🌍 Presentado por **[TTS-Studio](https://github.com/TTS-STUDIOS)** — parte de la suite unificada de plugins TTS-Studio.
 
 > 🌐 [English](README.md) · **Español**
 

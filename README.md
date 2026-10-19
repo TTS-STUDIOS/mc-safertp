@@ -11,7 +11,7 @@
 
 > **Async, safe random teleport for Paper and Spigot, 1.17 to 26.x** — annular distribution avoids spawn clustering, biome and material filters keep players out of lava and oceans, and a one-command **`/rtp back`** undoes the jump when the wilderness looks worse than expected.
 
-> 🌍 Brought to you by **[TTS-Studio](https://github.com/TheCuouz)** — part of the unified TTS-Studio plugin suite.
+> 🌍 Brought to you by **[TTS-Studio](https://github.com/TTS-STUDIOS)** — part of the unified TTS-Studio plugin suite.
 
 > 🌐 **English** · [Español](README.es.md)
 

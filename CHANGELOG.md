@@ -4,6 +4,11 @@ All notable changes to SafeRTP are documented in this file. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project
 follows semantic versioning.
 
+## [1.6.1] — 2026-10-19
+
+### Changed
+- The plugin's author now shows as TTS-Studio (plugin list and PlaceholderAPI). Nothing else changes.
+
 ## [1.6.0] — 2026-10-16
 
 ### Added

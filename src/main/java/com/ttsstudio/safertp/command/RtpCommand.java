@@ -26,6 +26,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -216,6 +217,8 @@ public class RtpCommand implements CommandExecutor {
             return;
         }
         WorldConfig config = optConfig.get();
+        final boolean firstTrip = config.hasFirstTrip() && !hasTravelled(player, world);
+        final WorldConfig searchConfig = firstTrip ? config.firstTrip() : config;
 
         if (searching.contains(player.getUniqueId())) {
             Texts.actionBar(player, MM.deserialize(msg("rtp-searching")));
@@ -248,7 +251,8 @@ public class RtpCommand implements CommandExecutor {
         plugin.getWarmupManager().start(player,
             plugin.getWorldConfigRegistry().getWarmupSeconds(), () -> {
 
-                Optional<Location> cached = plugin.getLocationCache() != null
+                // The cache holds spots of the full radius, so a first trip always searches.
+                Optional<Location> cached = !firstTrip && plugin.getLocationCache() != null
                         && plugin.getConfigManager().cacheEnabled()
                     ? plugin.getLocationCache().poll(finalWorld.getName())
                     : Optional.empty();
@@ -262,7 +266,7 @@ public class RtpCommand implements CommandExecutor {
                         return;
                     }
                     Texts.actionBar(player, MM.deserialize(msg("rtp-searching")));
-                    locationFuture = LocationFinder.findSafe(finalWorld, config, plugin.getWorldGuardHook());
+                    locationFuture = LocationFinder.findSafe(finalWorld, searchConfig, plugin.getWorldGuardHook());
                     locationFuture.whenComplete((loc, ex) -> searching.remove(player.getUniqueId()));
                 }
 
@@ -300,6 +304,12 @@ public class RtpCommand implements CommandExecutor {
                             }
                         }
 
+                        if (firstTrip) {
+                            markTravelled(player, finalWorld);
+                            ChatPrefix.send(player, identity, msg("rtp-first-trip")
+                                .replace("<max>", String.valueOf(searchConfig.maxRadius())));
+                        }
+
                         // Arrival effects (invulnerability, particles, sound)
                         applyArrivalEffects(player, loc);
 
@@ -323,6 +333,20 @@ public class RtpCommand implements CommandExecutor {
                     return null;
                 });
             });
+    }
+
+    /** Per-world flag on the player: has already done an RTP there (first-max-radius no longer applies). */
+    private NamespacedKey travelledKey(World world) {
+        return new NamespacedKey(plugin, "travelled_" + world.getName().toLowerCase(java.util.Locale.ROOT)
+            .replaceAll("[^a-z0-9._-]", "_"));
+    }
+
+    private boolean hasTravelled(Player player, World world) {
+        return player.getPersistentDataContainer().has(travelledKey(world), PersistentDataType.BYTE);
+    }
+
+    private void markTravelled(Player player, World world) {
+        player.getPersistentDataContainer().set(travelledKey(world), PersistentDataType.BYTE, (byte) 1);
     }
 
     private void applyArrivalEffects(Player player, Location loc) {

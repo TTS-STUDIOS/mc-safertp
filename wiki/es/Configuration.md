@@ -101,6 +101,7 @@ warmup-seconds: 5
 | `enabled` | `true` | Deshabilitar para evitar `/rtp` en este mundo (devuelve el mensaje `rtp-world-disabled`) |
 | `min-radius` | `1000` | Radio interior del anillo, en bloques, desde `(center-x, center-z)` |
 | `max-radius` | `10000` | Radio exterior del anillo |
+| `first-max-radius` | `0` | Radio exterior del **primer** `/rtp` de cada jugador en este mundo (los nuevos caen cerca del spawn); los siguientes usan `max-radius`. `0` = apagado. El fichero de fábrica trae `3000` |
 | `center-x` | `0` | Coordenada X del centro de la zona RTP |
 | `center-z` | `0` | Coordenada Z del centro de la zona RTP |
 | `biome-whitelist` | `[]` | Si no está vacío, **solo** los biomas listados aquí se consideran seguros |

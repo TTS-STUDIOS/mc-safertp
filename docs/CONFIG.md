@@ -9,6 +9,7 @@
 | `worlds.<name>.enabled` | boolean | `true` | Enable RTP in this world |
 | `worlds.<name>.min-radius` | int | `1000` | Minimum distance from center |
 | `worlds.<name>.max-radius` | int | `10000` | Maximum distance from center |
+| `worlds.<name>.first-max-radius` | int | `0` (`3000` in the bundled file) | Maximum distance of a player's FIRST `/rtp` in this world; later trips use `max-radius`. `0` = off |
 | `worlds.<name>.center-x` | int | `0` | X coordinate of search center |
 | `worlds.<name>.center-z` | int | `0` | Z coordinate of search center |
 | `worlds.<name>.biome-whitelist` | list | `[]` | Only allow these biomes (empty = all allowed) |

@@ -5,6 +5,7 @@
 rtp-warmup-action-bar: "<yellow>⏳ Teletransportando en <bold><seconds> s</bold>. ¡No te muevas!"
 rtp-searching: "<gray>Buscando localización segura..."
 rtp-success: "<green>¡Teletransportado a <world> (<x>, <y>, <z>)!"
+rtp-first-trip: "<gray>Tu primer viaje: te dejo a menos de <white><max></white> bloques del centro."
 rtp-cancelled-move: "<red>Teletransporte cancelado al moverte."
 rtp-cancelled-damage: "<red>Teletransporte cancelado al recibir daño."
 rtp-cooldown: "<red>Debes esperar <seconds> s antes de usar /rtp de nuevo."

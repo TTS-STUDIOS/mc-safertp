@@ -425,7 +425,7 @@ public class RtpCommand implements CommandExecutor {
 
     private static String formatBiomeName(String key) {
         return Arrays.stream(key.split("_"))
-            .map(w -> Character.toUpperCase(w.charAt(0)) + w.substring(1).toLowerCase())
+            .map(w -> Character.toUpperCase(w.charAt(0)) + w.substring(1).toLowerCase(java.util.Locale.ROOT))
             .collect(Collectors.joining(" "));
     }
 

@@ -24,7 +24,7 @@ public final class ConfigManager {
     public FileConfiguration raw() { return cfg; }
 
     /** Active locale (ISO-639-1 two-letter code, lowercase). Default "es". */
-    public String language() { return cfg.getString("language", "en").toLowerCase(); }
+    public String language() { return cfg.getString("language", "en").toLowerCase(java.util.Locale.ROOT); }
 
     /** World used by a bare /rtp when the player's current world has RTP disabled (empty = none). */
     public String defaultWorld() { return cfg.getString("default-world", ""); }

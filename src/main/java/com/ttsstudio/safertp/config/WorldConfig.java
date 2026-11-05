@@ -40,6 +40,20 @@ public record WorldConfig(
         return false;
     }
 
+    /** True when one avoid zone swallows the whole ring, so /rtp can never find a spot. */
+    public boolean ringFullyAvoided() {
+        for (AvoidZone z : avoidZones) {
+            double gap = Math.hypot((double) z.x() - centerX, (double) z.z() - centerZ);
+            if (gap + maxRadius <= z.radius()) return true;
+        }
+        return false;
+    }
+
+    /** True when the ring's centre sits inside an avoid zone (a min-radius 0 world then loses its middle). */
+    public boolean centerAvoided() {
+        return isAvoided(centerX, centerZ);
+    }
+
     /** True when a player's first RTP in this world lands closer (first-max-radius > 0). */
     public boolean hasFirstTrip() {
         return firstMaxRadius > 0 && firstMaxRadius < maxRadius;

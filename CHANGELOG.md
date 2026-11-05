@@ -10,6 +10,7 @@ follows semantic versioning.
 - **Avoid zones.** New `avoid-zones` list per world in `worlds.yml`: circles (`x`, `z`, `radius`) where
   `/rtp` never lands. Use them to keep players from dropping onto an event area or a treasure hunt.
   Empty by default; existing `worlds.yml` files keep working.
+- **Avoid-zone warnings.** On load, the console warns when an avoid zone covers the whole ring or the centre of a world.
 
 ## [1.7.0] — 2026-11-05
 

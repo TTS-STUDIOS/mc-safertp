@@ -59,6 +59,14 @@ public class WorldConfigRegistry {
             ));
         }
 
+        for (WorldConfig wc : configs.values()) {
+            if (wc.ringFullyAvoided()) {
+                PluginLog.of(plugin).warn("worlds.{}: an avoid-zone covers the whole ring, /rtp cannot land anywhere.", wc.worldName());
+            } else if (wc.centerAvoided()) {
+                PluginLog.of(plugin).warn("worlds.{}: an avoid-zone covers the centre ({}, {}).", wc.worldName(), wc.centerX(), wc.centerZ());
+            }
+        }
+
         portalRtpConfigs.clear();
         ConfigurationSection portalRtpSec = cfg.getConfigurationSection("portal-rtp.worlds");
         portalRtpConfigs.putAll(parsePortalRtp(portalRtpSec));

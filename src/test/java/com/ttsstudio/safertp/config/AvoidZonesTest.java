@@ -46,4 +46,18 @@ class AvoidZonesTest {
             Map.of("x", "a", "z", 2, "radius", 5)));
         assertEquals(List.of(new WorldConfig.AvoidZone(1, 2, 30)), zones);
     }
+
+    @Test
+    void zoneCoveringTheWholeRingIsDetected() {
+        assertTrue(world(List.of(new WorldConfig.AvoidZone(0, 0, 1000))).ringFullyAvoided());
+        assertTrue(world(List.of(new WorldConfig.AvoidZone(100, 0, 1100))).ringFullyAvoided());
+        assertFalse(world(List.of(new WorldConfig.AvoidZone(100, 0, 1000))).ringFullyAvoided());
+        assertFalse(world(List.of()).ringFullyAvoided());
+    }
+
+    @Test
+    void centerInsideAZoneIsDetected() {
+        assertTrue(world(List.of(new WorldConfig.AvoidZone(10, 10, 50))).centerAvoided());
+        assertFalse(world(List.of(new WorldConfig.AvoidZone(500, 500, 50))).centerAvoided());
+    }
 }

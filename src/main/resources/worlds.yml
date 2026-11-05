@@ -20,6 +20,8 @@ worlds:
       - "DEEP_LUKEWARM_OCEAN"
       - "DEEP_COLD_OCEAN"
       - "DEEP_FROZEN_OCEAN"
+    # Cooldown in seconds after an /rtp in this world. Leave out to use cooldown-default; 0 = none.
+    # cooldown: 120
     # Circles where /rtp never lands (event areas, treasure hunts). Empty = none.
     # avoid-zones:
     #   - {x: 1200, z: -800, radius: 300}

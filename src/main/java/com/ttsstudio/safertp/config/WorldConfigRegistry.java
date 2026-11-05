@@ -18,6 +18,7 @@ public class WorldConfigRegistry {
     private final Map<String, WorldConfig> configs = new LinkedHashMap<>();
     private final Map<String, PortalRtpConfig> portalRtpConfigs = new LinkedHashMap<>();
     private int defaultCooldown = 300;
+    private final Map<String, Integer> worldCooldowns = new java.util.HashMap<>();
     private int warmupSeconds = 5;
 
     public WorldConfigRegistry(SafeRtpPlugin plugin) {
@@ -26,6 +27,7 @@ public class WorldConfigRegistry {
 
     public void load() {
         configs.clear();
+        worldCooldowns.clear();
         File file = new File(plugin.getDataFolder(), "worlds.yml");
         if (!file.exists()) plugin.saveResource("worlds.yml", false);
 
@@ -39,6 +41,8 @@ public class WorldConfigRegistry {
         for (String name : worlds.getKeys(false)) {
             ConfigurationSection sec = worlds.getConfigurationSection(name);
             if (sec == null) continue;
+
+            if (sec.isSet("cooldown")) worldCooldowns.put(name, Math.max(0, sec.getInt("cooldown")));
 
             Set<Biome> whitelist = parseBiomes(sec.getStringList("biome-whitelist"));
             Set<Biome> blacklist = parseBiomes(sec.getStringList("biome-blacklist"));
@@ -134,6 +138,11 @@ public class WorldConfigRegistry {
     }
 
     public int getDefaultCooldown() { return defaultCooldown; }
+
+    /** Cooldown in seconds after rolling in {@code world}: its own {@code cooldown} if set, else the default. */
+    public int cooldownFor(String world) {
+        return worldCooldowns.getOrDefault(world, defaultCooldown);
+    }
     public int getWarmupSeconds()   { return warmupSeconds; }
     public int size()               { return configs.size(); }
     public int portalRtpCount()     { return portalRtpConfigs.size(); }

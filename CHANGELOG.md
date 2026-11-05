@@ -7,6 +7,8 @@ follows semantic versioning.
 ## [Unreleased]
 
 ### Added
+- **Per-world cooldown.** Optional `cooldown:` (seconds) on a world in `worlds.yml` replaces `cooldown-default` after an RTP in that world
+  (`0` = none). `safertp.cooldown.<n>` permissions can still lower it; worlds without the key are unchanged.
 - **Avoid zones.** New `avoid-zones` list per world in `worlds.yml`: circles (`x`, `z`, `radius`) where
   `/rtp` never lands. Use them to keep players from dropping onto an event area or a treasure hunt.
   Empty by default; existing `worlds.yml` files keep working.

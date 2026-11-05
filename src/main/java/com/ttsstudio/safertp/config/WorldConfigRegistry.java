@@ -53,7 +53,8 @@ public class WorldConfigRegistry {
                 whitelist,
                 blacklist,
                 sec.getInt("max-attempts", 50),
-                sec.getDouble("cost", 0)
+                sec.getDouble("cost", 0),
+                sec.getInt("first-max-radius", 0)
             ));
         }
 

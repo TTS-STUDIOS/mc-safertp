@@ -101,6 +101,7 @@ warmup-seconds: 5
 | `enabled` | `true` | Disable to prevent `/rtp` in this world (returns the `rtp-world-disabled` message) |
 | `min-radius` | `1000` | Inner radius of the annulus, in blocks, from `(center-x, center-z)` |
 | `max-radius` | `10000` | Outer radius of the annulus |
+| `first-max-radius` | `0` | Outer radius of a player's **first** `/rtp` in this world (new players land near spawn); later trips use `max-radius`. `0` = off. The bundled file ships `3000` |
 | `center-x` | `0` | X coordinate of the RTP zone center |
 | `center-z` | `0` | Z coordinate of the RTP zone center |
 | `biome-whitelist` | `[]` | If non-empty, **only** biomes listed here are considered safe |

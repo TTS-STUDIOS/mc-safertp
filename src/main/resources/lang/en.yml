@@ -5,6 +5,7 @@
 rtp-warmup-action-bar: "<yellow>⏳ Teleporting in <bold><seconds>s</bold>... Don't move!"
 rtp-searching: "<gray>Searching for a safe location..."
 rtp-success: "<green>Teleported to <world> (<x>, <y>, <z>)!"
+rtp-first-trip: "<gray>Your first trip: you land within <white><max></white> blocks of the centre."
 rtp-cancelled-move: "<red>Teleport cancelled — you moved."
 rtp-cancelled-damage: "<red>Teleport cancelled — you took damage."
 rtp-cooldown: "<red>You must wait <seconds>s before using /rtp again."

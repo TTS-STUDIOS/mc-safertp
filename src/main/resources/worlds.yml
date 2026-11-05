@@ -4,6 +4,9 @@ worlds:
     enabled: true
     min-radius: 1000
     max-radius: 10000
+    # A player's FIRST /rtp in this world lands within this radius (new players start
+    # near spawn instead of at the far edge). Later trips use max-radius. 0 = off.
+    first-max-radius: 3000
     center-x: 0
     center-z: 0
     biome-whitelist: []

@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CacheRefillerTest {
 
     private static WorldConfig world(String name) {
-        return new WorldConfig(name, true, 100, 1000, 0, 0, Set.of(), Set.of(), 50, 0);
+        return new WorldConfig(name, true, 100, 1000, 0, 0, Set.of(), Set.of(), 50, 0, 0);
     }
 
     /** Searches that stay open until the test completes them. */

@@ -4,6 +4,13 @@ All notable changes to SafeRTP are documented in this file. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project
 follows semantic versioning.
 
+## [Unreleased]
+
+### Added
+- **Avoid zones.** New `avoid-zones` list per world in `worlds.yml`: circles (`x`, `z`, `radius`) where
+  `/rtp` never lands. Use them to keep players from dropping onto an event area or a treasure hunt.
+  Empty by default; existing `worlds.yml` files keep working.
+
 ## [1.7.0] — 2026-11-05
 
 ### Added

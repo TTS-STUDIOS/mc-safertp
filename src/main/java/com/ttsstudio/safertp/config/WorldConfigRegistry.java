@@ -54,7 +54,8 @@ public class WorldConfigRegistry {
                 blacklist,
                 sec.getInt("max-attempts", 50),
                 sec.getDouble("cost", 0),
-                sec.getInt("first-max-radius", 0)
+                sec.getInt("first-max-radius", 0),
+                parseAvoidZones(sec.getMapList("avoid-zones"))
             ));
         }
 
@@ -83,6 +84,17 @@ public class WorldConfigRegistry {
             result.put(source, new PortalRtpConfig(source, target, sec.getLong("cooldown-seconds", 60L)));
         }
         return result;
+    }
+
+    /** Pure parse of {@code avoid-zones}: entries without x, z and a positive radius are skipped. */
+    static List<WorldConfig.AvoidZone> parseAvoidZones(List<Map<?, ?>> raw) {
+        List<WorldConfig.AvoidZone> zones = new ArrayList<>();
+        for (Map<?, ?> m : raw) {
+            if (!(m.get("x") instanceof Number x) || !(m.get("z") instanceof Number z)
+                || !(m.get("radius") instanceof Number r) || r.intValue() <= 0) continue;
+            zones.add(new WorldConfig.AvoidZone(x.intValue(), z.intValue(), r.intValue()));
+        }
+        return List.copyOf(zones);
     }
 
     private Set<Biome> parseBiomes(List<String> names) {

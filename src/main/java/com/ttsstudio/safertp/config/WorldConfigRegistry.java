@@ -69,6 +69,9 @@ public class WorldConfigRegistry {
             } else if (wc.centerAvoided()) {
                 PluginLog.of(plugin).warn("worlds.{}: an avoid-zone covers the centre ({}, {}).", wc.worldName(), wc.centerX(), wc.centerZ());
             }
+            if (!wc.ringFullyAvoided() && wc.firstRingFullyAvoided()) {
+                PluginLog.of(plugin).warn("worlds.{}: an avoid-zone covers the whole first-max-radius, first trips use max-radius.", wc.worldName());
+            }
         }
 
         portalRtpConfigs.clear();

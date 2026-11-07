@@ -109,7 +109,7 @@ warmup-seconds: 5
 | `max-attempts` | `50` | How many random points to try before giving up and showing `rtp-no-safe-location` |
 | `cost` | `0` | Vault economy cost per successful RTP. `0` = free. Charged only on success |
 | `cooldown` | *(unset)* | Cooldown in seconds after an `/rtp` in this world; replaces `cooldown-default` there. `0` = none. `safertp.cooldown.<n>` permissions can still lower it |
-| `avoid-zones` | `[]` | Circles where `/rtp` never lands, each `{x, z, radius}` (event areas, treasure hunts). On load the console warns if a zone covers the whole ring or the centre |
+| `avoid-zones` | `[]` | Circles where `/rtp` never lands, each `{x, z, radius}` (event areas, treasure hunts). On load the console warns if a zone covers the whole ring or the centre; if it covers the whole `first-max-radius`, first trips use `max-radius` |
 
 > 📝 **Note:** The random point is drawn from a **uniform annulus** between `min-radius` and `max-radius` — points are *not* biased toward the center. The math (`sqrt(min² + r·(max² − min²))`) guarantees equal-area sampling.
 

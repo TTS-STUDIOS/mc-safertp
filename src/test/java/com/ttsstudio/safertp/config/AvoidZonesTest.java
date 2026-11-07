@@ -60,4 +60,19 @@ class AvoidZonesTest {
         assertTrue(world(List.of(new WorldConfig.AvoidZone(10, 10, 50))).centerAvoided());
         assertFalse(world(List.of(new WorldConfig.AvoidZone(500, 500, 50))).centerAvoided());
     }
+
+    @Test
+    void firstTripFallsBackWhenAZoneSwallowsItsDisc() {
+        WorldConfig c = new WorldConfig("w", true, 1000, 10000, 0, 0, Set.of(), Set.of(), 50, 0, 3000,
+            List.of(new WorldConfig.AvoidZone(0, 0, 6000)));
+        assertTrue(c.firstRingFullyAvoided());
+        assertFalse(c.hasFirstTrip());
+        assertSame(c, c.firstTrip());
+        assertFalse(c.ringFullyAvoided());
+
+        WorldConfig small = new WorldConfig("w", true, 1000, 10000, 0, 0, Set.of(), Set.of(), 50, 0, 3000,
+            List.of(new WorldConfig.AvoidZone(0, 0, 500)));
+        assertFalse(small.firstRingFullyAvoided());
+        assertTrue(small.hasFirstTrip());
+    }
 }

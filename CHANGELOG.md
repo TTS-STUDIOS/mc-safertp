@@ -15,6 +15,7 @@ follows semantic versioning.
   `/rtp` never lands. Use them to keep players from dropping onto an event area or a treasure hunt.
   Empty by default; existing `worlds.yml` files keep working.
 - **Avoid-zone warnings.** On load, the console warns when an avoid zone covers the whole ring or the centre of a world.
+  If a zone covers the whole `first-max-radius`, first trips use `max-radius` instead of never finding a spot.
 
 ## [1.7.0] — 2026-11-05
 

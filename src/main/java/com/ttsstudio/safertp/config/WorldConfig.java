@@ -42,9 +42,18 @@ public record WorldConfig(
 
     /** True when one avoid zone swallows the whole ring, so /rtp can never find a spot. */
     public boolean ringFullyAvoided() {
+        return discFullyAvoided(maxRadius);
+    }
+
+    /** True when first-max-radius is set but one avoid zone swallows that smaller disc; first trips then use max-radius. */
+    public boolean firstRingFullyAvoided() {
+        return firstMaxRadius > 0 && firstMaxRadius < maxRadius && discFullyAvoided(firstMaxRadius);
+    }
+
+    private boolean discFullyAvoided(int outerRadius) {
         for (AvoidZone z : avoidZones) {
             double gap = Math.hypot((double) z.x() - centerX, (double) z.z() - centerZ);
-            if (gap + maxRadius <= z.radius()) return true;
+            if (gap + outerRadius <= z.radius()) return true;
         }
         return false;
     }
@@ -56,7 +65,7 @@ public record WorldConfig(
 
     /** True when a player's first RTP in this world lands closer (first-max-radius > 0). */
     public boolean hasFirstTrip() {
-        return firstMaxRadius > 0 && firstMaxRadius < maxRadius;
+        return firstMaxRadius > 0 && firstMaxRadius < maxRadius && !firstRingFullyAvoided();
     }
 
     /** The same world with the radius of a player's first RTP; itself when there is none. */

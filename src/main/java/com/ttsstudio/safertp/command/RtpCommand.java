@@ -298,7 +298,7 @@ public class RtpCommand implements CommandExecutor {
                         // Apply cooldown
                         if (!bypassCooldown) {
                             int secs = plugin.getCooldownManager().resolvePlayerCooldown(
-                                player, plugin.getWorldConfigRegistry().getDefaultCooldown());
+                                player, plugin.getWorldConfigRegistry().cooldownFor(world.getName()));
                             if (secs > 0) {
                                 plugin.getCooldownManager().setCooldown(player.getUniqueId(), secs);
                             }

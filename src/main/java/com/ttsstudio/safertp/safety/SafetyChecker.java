@@ -29,6 +29,8 @@ public final class SafetyChecker {
 
         if (!loc.getWorld().getWorldBorder().isInside(loc)) return false;
 
+        if (config.isAvoided(loc.getBlockX(), loc.getBlockZ())) return false;
+
         if (wgHook != null && wgHook.isInProtectedRegion(loc)) return false;
 
         int y    = loc.getBlockY();

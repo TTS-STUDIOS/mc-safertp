@@ -10,6 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class WorldConfigRegistryTest {
 
     @Test
+    void cooldownFallsBackToDefault() {
+        assertEquals(300, new WorldConfigRegistry(null).cooldownFor("anything"));
+    }
+
+    @Test
     void noSectionMeansOff() {
         assertTrue(WorldConfigRegistry.parsePortalRtp(null).isEmpty());
     }

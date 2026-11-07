@@ -15,6 +15,8 @@
 | `worlds.<name>.biome-whitelist` | list | `[]` | Only allow these biomes (empty = all allowed) |
 | `worlds.<name>.biome-blacklist` | list | `[]` | Reject these biomes |
 | `worlds.<name>.max-attempts` | int | `50` | Max candidate locations before failing |
+| `worlds.<name>.cooldown` | int | *(unset)* | Cooldown (s) after an `/rtp` in this world, replacing `cooldown-default`. `0` = none |
+| `worlds.<name>.avoid-zones` | list | `[]` | Circles `{x, z, radius}` where `/rtp` never lands |
 | `worlds.<name>.cost` | double | `0` | Economy cost (requires Vault) |
 
 ## messages.yml

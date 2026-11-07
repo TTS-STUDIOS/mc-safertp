@@ -18,6 +18,7 @@ public class WorldConfigRegistry {
     private final Map<String, WorldConfig> configs = new LinkedHashMap<>();
     private final Map<String, PortalRtpConfig> portalRtpConfigs = new LinkedHashMap<>();
     private int defaultCooldown = 300;
+    private final Map<String, Integer> worldCooldowns = new java.util.HashMap<>();
     private int warmupSeconds = 5;
 
     public WorldConfigRegistry(SafeRtpPlugin plugin) {
@@ -26,6 +27,7 @@ public class WorldConfigRegistry {
 
     public void load() {
         configs.clear();
+        worldCooldowns.clear();
         File file = new File(plugin.getDataFolder(), "worlds.yml");
         if (!file.exists()) plugin.saveResource("worlds.yml", false);
 
@@ -39,6 +41,8 @@ public class WorldConfigRegistry {
         for (String name : worlds.getKeys(false)) {
             ConfigurationSection sec = worlds.getConfigurationSection(name);
             if (sec == null) continue;
+
+            if (sec.isSet("cooldown")) worldCooldowns.put(name, Math.max(0, sec.getInt("cooldown")));
 
             Set<Biome> whitelist = parseBiomes(sec.getStringList("biome-whitelist"));
             Set<Biome> blacklist = parseBiomes(sec.getStringList("biome-blacklist"));
@@ -54,8 +58,17 @@ public class WorldConfigRegistry {
                 blacklist,
                 sec.getInt("max-attempts", 50),
                 sec.getDouble("cost", 0),
-                sec.getInt("first-max-radius", 0)
+                sec.getInt("first-max-radius", 0),
+                parseAvoidZones(sec.getMapList("avoid-zones"))
             ));
+        }
+
+        for (WorldConfig wc : configs.values()) {
+            if (wc.ringFullyAvoided()) {
+                PluginLog.of(plugin).warn("worlds.{}: an avoid-zone covers the whole ring, /rtp cannot land anywhere.", wc.worldName());
+            } else if (wc.centerAvoided()) {
+                PluginLog.of(plugin).warn("worlds.{}: an avoid-zone covers the centre ({}, {}).", wc.worldName(), wc.centerX(), wc.centerZ());
+            }
         }
 
         portalRtpConfigs.clear();
@@ -83,6 +96,17 @@ public class WorldConfigRegistry {
             result.put(source, new PortalRtpConfig(source, target, sec.getLong("cooldown-seconds", 60L)));
         }
         return result;
+    }
+
+    /** Pure parse of {@code avoid-zones}: entries without x, z and a positive radius are skipped. */
+    static List<WorldConfig.AvoidZone> parseAvoidZones(List<Map<?, ?>> raw) {
+        List<WorldConfig.AvoidZone> zones = new ArrayList<>();
+        for (Map<?, ?> m : raw) {
+            if (!(m.get("x") instanceof Number x) || !(m.get("z") instanceof Number z)
+                || !(m.get("radius") instanceof Number r) || r.intValue() <= 0) continue;
+            zones.add(new WorldConfig.AvoidZone(x.intValue(), z.intValue(), r.intValue()));
+        }
+        return List.copyOf(zones);
     }
 
     private Set<Biome> parseBiomes(List<String> names) {
@@ -114,6 +138,11 @@ public class WorldConfigRegistry {
     }
 
     public int getDefaultCooldown() { return defaultCooldown; }
+
+    /** Cooldown in seconds after rolling in {@code world}: its own {@code cooldown} if set, else the default. */
+    public int cooldownFor(String world) {
+        return worldCooldowns.getOrDefault(world, defaultCooldown);
+    }
     public int getWarmupSeconds()   { return warmupSeconds; }
     public int size()               { return configs.size(); }
     public int portalRtpCount()     { return portalRtpConfigs.size(); }

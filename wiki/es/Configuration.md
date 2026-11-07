@@ -108,6 +108,8 @@ warmup-seconds: 5
 | `biome-blacklist` | *(ver lista de océanos)* | Biomas que siempre se consideran inseguros — los candidatos en ellos se rechazan |
 | `max-attempts` | `50` | Cuántos puntos aleatorios intentar antes de rendirse y mostrar `rtp-no-safe-location` |
 | `cost` | `0` | Coste de economía Vault por RTP exitoso. `0` = gratis. Se cobra solo en éxito |
+| `cooldown` | *(sin poner)* | Enfriamiento en segundos tras un `/rtp` en este mundo; sustituye a `cooldown-default` aquí. `0` = ninguno. Los permisos `safertp.cooldown.<n>` lo pueden bajar |
+| `avoid-zones` | `[]` | Círculos donde `/rtp` nunca cae, cada uno `{x, z, radius}` (zonas de evento, búsquedas del tesoro). Al cargar, la consola avisa si una zona tapa todo el anillo o el centro |
 
 > 📝 **Nota:** El punto aleatorio se extrae de un **anillo uniforme** entre `min-radius` y `max-radius` — los puntos *no* están sesgados hacia el centro. La matemática (`sqrt(min² + r·(max² − min²))`) garantiza muestreo de igual área.
 

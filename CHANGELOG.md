@@ -6,6 +6,8 @@ follows semantic versioning.
 
 ## [Unreleased]
 
+## [1.8.0] — 2026-11-07
+
 ### Added
 - **Per-world cooldown.** Optional `cooldown:` (seconds) on a world in `worlds.yml` replaces `cooldown-default` after an RTP in that world
   (`0` = none). `safertp.cooldown.<n>` permissions can still lower it; worlds without the key are unchanged.

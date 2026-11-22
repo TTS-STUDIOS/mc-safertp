@@ -49,4 +49,11 @@ class DangerousMaterialsTest {
     void dangerousFloorSet_hasExpectedSize() {
         assertEquals(9, SafetyChecker.DANGEROUS_FLOOR.size());
     }
+
+    @Test
+    void neighbourSetCoversLavaFireCactus() {
+        for (String n : new String[]{"LAVA", "FIRE", "SOUL_FIRE", "CACTUS", "MAGMA_BLOCK"})
+            assertTrue(SafetyChecker.DANGEROUS_NEIGHBOUR.contains(n), n);
+        assertFalse(SafetyChecker.DANGEROUS_NEIGHBOUR.contains("STONE"));
+    }
 }

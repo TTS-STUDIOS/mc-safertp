@@ -17,6 +17,13 @@ public final class SafetyChecker {
         "CACTUS", "SWEET_BERRY_BUSH", "WITHER_ROSE", "POWDER_SNOW"
     );
 
+    /** Blocks that hurt or spread onto a player standing next to them. */
+    public static final Set<String> DANGEROUS_NEIGHBOUR = Set.of(
+        "LAVA", "FIRE", "SOUL_FIRE", "CACTUS", "MAGMA_BLOCK"
+    );
+
+    private static final int[][] SIDES = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
     private SafetyChecker() {}
 
     public static boolean isSafe(Location loc, WorldConfig config) {
@@ -46,6 +53,12 @@ public final class SafetyChecker {
         if (!isPassable(head.getType())) return false;
         if (!floor.getType().isSolid()) return false;
         if (DANGEROUS_FLOOR.contains(floor.getType().name())) return false;
+
+        for (int[] d : SIDES) {
+            if (DANGEROUS_NEIGHBOUR.contains(feet.getRelative(d[0], 0, d[1]).getType().name())) return false;
+            if (DANGEROUS_NEIGHBOUR.contains(head.getRelative(d[0], 0, d[1]).getType().name())) return false;
+        }
+        if (DANGEROUS_NEIGHBOUR.contains(head.getRelative(0, 1, 0).getType().name())) return false;
 
         Biome biome = loc.getWorld().getBiome(loc.getBlockX(), y, loc.getBlockZ());
         if (!config.biomeWhitelist().isEmpty() && !config.biomeWhitelist().contains(biome)) return false;

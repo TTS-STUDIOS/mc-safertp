@@ -6,6 +6,9 @@ follows semantic versioning.
 
 ## [Unreleased]
 
+### Fixed
+- `/rtp` no longer lands next to lava, fire, cactus or magma (sides of feet and head, or right above), not only on top of them.
+
 ## [1.8.0] — 2026-11-07
 
 ### Added

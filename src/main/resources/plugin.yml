@@ -32,6 +32,9 @@ permissions:
   safertp.bypass.cost:
     description: Bypass Vault cost
     default: op
+  safertp.bypass.playtime:
+    description: Skip the play-time requirement per world
+    default: op
   safertp.back:
     description: Use /rtp back to undo a RTP
     default: true

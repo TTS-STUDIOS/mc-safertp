@@ -39,6 +39,9 @@ public final class ConfigManager {
     public long    backTtlSeconds()     { return cfg.getLong("back.ttl-seconds", 300L); }
     public long    backCooldownSeconds(){ return cfg.getLong("back.cooldown-seconds", 60L); }
 
+    // ─── Playtime gate ────────────────────────────────────────────────────────
+    public double minPlaytimeHours(String world) { return cfg.getDouble("min-playtime-hours." + world, 0); }
+
     // ─── Arrival effects ──────────────────────────────────────────────────────
     public int    arrivalInvulnerabilitySeconds() { return cfg.getInt("arrival.invulnerability-seconds", 5); }
     public boolean arrivalParticlesEnabled()      { return cfg.getBoolean("arrival.particles.enabled", true); }

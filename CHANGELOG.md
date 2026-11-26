@@ -6,6 +6,10 @@ follows semantic versioning.
 
 ## [Unreleased]
 
+### Added
+
+- `min-playtime-hours.<world>` in config.yml: hours of played time needed to /rtp into a world (e.g. Nether 5, End 20). Message says how many hours are missing. Staff skip it (`safertp.admin`, `safertp.bypass.playtime`).
+
 ## [1.8.1] — 2026-11-22
 
 ### Fixed

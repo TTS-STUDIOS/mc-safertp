@@ -53,3 +53,9 @@ cooldown-default: 300
 
 # Warmup duration in seconds before teleporting
 warmup-seconds: 5
+
+# No warmup from these worlds (a spawn square): with only-where-pvp-is-off, only where WorldGuard
+# denies PvP at the player's spot, so an arena inside the same world keeps the warmup.
+warmup-skip:
+  worlds: []
+  only-where-pvp-is-off: true

@@ -3,6 +3,9 @@ package com.ttsstudio.safertp.integration;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.association.RegionAssociable;
+import com.sk89q.worldguard.protection.flags.Flags;
+import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -37,6 +40,12 @@ public class WorldGuardHook {
                 + " disabled: " + e);
             return null;
         }
+    }
+
+    public boolean isPvpDenied(Location loc) {
+        if (loc.getWorld() == null) return false;
+        return regionContainer.createQuery().queryState(
+            BukkitAdapter.adapt(loc), (RegionAssociable) null, Flags.PVP) == StateFlag.State.DENY;
     }
 
     public boolean isInProtectedRegion(Location loc) {

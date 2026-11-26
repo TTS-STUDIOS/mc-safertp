@@ -46,6 +46,16 @@ menu:
   notes: {}
 
 # ============================================================
+# PLAYTIME GATE
+# ============================================================
+# Hours of played time (the player's play-time statistic) needed to /rtp into a world.
+# A world left out has no requirement. Staff with safertp.admin or
+# safertp.bypass.playtime skip it. Applies to the command, the menu and /rtp <world>.
+min-playtime-hours: {}
+#  world_nether: 5
+#  world_the_end: 20
+
+# ============================================================
 # BACK COMMAND  (v1.1.0)
 # ============================================================
 # Lets players undo their last /rtp with /rtp back.

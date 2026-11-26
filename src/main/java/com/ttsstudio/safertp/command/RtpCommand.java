@@ -217,6 +217,13 @@ public class RtpCommand implements CommandExecutor {
             return;
         }
         WorldConfig config = optConfig.get();
+        double missing = PlaytimeGate.missingHours(player.getStatistic(org.bukkit.Statistic.PLAY_ONE_MINUTE),
+            plugin.getConfigManager().minPlaytimeHours(world.getName()));
+        if (missing > 0 && !player.hasPermission("safertp.bypass.playtime") && !player.hasPermission("safertp.admin")) {
+            ChatPrefix.send(player, identity, msg("rtp-playtime-needed")
+                .replace("<hours>", PlaytimeGate.format(missing)).replace("<world>", worldName(world)));
+            return;
+        }
         final boolean firstTrip = config.hasFirstTrip() && !hasTravelled(player, world);
         final WorldConfig searchConfig = firstTrip ? config.firstTrip() : config;
 

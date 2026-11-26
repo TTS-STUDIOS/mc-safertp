@@ -3,10 +3,12 @@ package com.ttsstudio.safertp.command;
 import com.ttsstudio.safertp.SafeRtpPlugin;
 import com.ttsstudio.safertp.back.BackLocationStore;
 import com.ttsstudio.safertp.config.WorldConfig;
+import com.ttsstudio.safertp.config.WorldConfigRegistry;
 import com.ttsstudio.safertp.discovery.BiomeDiscoveryTracker;
 import com.ttsstudio.safertp.finder.LocationFinder;
 import com.ttsstudio.safertp.finder.NoSafeLocationException;
 import com.ttsstudio.safertp.integration.VaultHook;
+import com.ttsstudio.safertp.integration.WorldGuardHook;
 import com.ttsstudio.sdk.PluginIdentity;
 import com.ttsstudio.sdk.chat.ChatPrefix;
 import com.ttsstudio.sdk.compat.Particles;
@@ -210,6 +212,14 @@ public class RtpCommand implements CommandExecutor {
         return fallback != null ? fallback : current;
     }
 
+    private int warmupFor(Player player) {
+        WorldConfigRegistry reg = plugin.getWorldConfigRegistry();
+        if (!reg.getWarmupSkipWorlds().contains(player.getWorld().getName())) return reg.getWarmupSeconds();
+        if (!reg.warmupSkipNeedsPvpOff()) return 0;
+        WorldGuardHook wg = plugin.getWorldGuardHook();
+        return wg != null && wg.isPvpDenied(player.getLocation()) ? 0 : reg.getWarmupSeconds();
+    }
+
     private void doRtp(Player player, World world, boolean bypassCooldown) {
         var optConfig = plugin.getWorldConfigRegistry().get(world.getName());
         if (optConfig.isEmpty() || !optConfig.get().enabled()) {
@@ -256,7 +266,7 @@ public class RtpCommand implements CommandExecutor {
         // Warmup → search → teleport
         final World finalWorld = world;
         plugin.getWarmupManager().start(player,
-            plugin.getWorldConfigRegistry().getWarmupSeconds(), () -> {
+            warmupFor(player), () -> {
 
                 // The cache holds spots of the full radius, so a first trip always searches.
                 Optional<Location> cached = !firstTrip && plugin.getLocationCache() != null

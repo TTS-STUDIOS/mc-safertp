@@ -20,6 +20,8 @@ public class WorldConfigRegistry {
     private int defaultCooldown = 300;
     private final Map<String, Integer> worldCooldowns = new java.util.HashMap<>();
     private int warmupSeconds = 5;
+    private Set<String> warmupSkipWorlds = Set.of();
+    private boolean warmupSkipNeedsPvpOff = true;
 
     public WorldConfigRegistry(SafeRtpPlugin plugin) {
         this.plugin = plugin;
@@ -34,6 +36,8 @@ public class WorldConfigRegistry {
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         defaultCooldown = cfg.getInt("cooldown-default", 300);
         warmupSeconds   = cfg.getInt("warmup-seconds", 5);
+        warmupSkipWorlds = new HashSet<>(cfg.getStringList("warmup-skip.worlds"));
+        warmupSkipNeedsPvpOff = cfg.getBoolean("warmup-skip.only-where-pvp-is-off", true);
 
         ConfigurationSection worlds = cfg.getConfigurationSection("worlds");
         if (worlds == null) return;
@@ -147,6 +151,8 @@ public class WorldConfigRegistry {
         return worldCooldowns.getOrDefault(world, defaultCooldown);
     }
     public int getWarmupSeconds()   { return warmupSeconds; }
+    public Set<String> getWarmupSkipWorlds() { return warmupSkipWorlds; }
+    public boolean warmupSkipNeedsPvpOff() { return warmupSkipNeedsPvpOff; }
     public int size()               { return configs.size(); }
     public int portalRtpCount()     { return portalRtpConfigs.size(); }
 }

@@ -6,9 +6,16 @@ follows semantic versioning.
 
 ## [Unreleased]
 
+## [1.9.2] — 2026-11-27
+
 ### Added
 
 - `min-playtime-hours.<world>` in config.yml: hours of played time needed to /rtp into a world (e.g. Nether 5, End 20). Message says how many hours are missing. Staff skip it (`safertp.admin`, `safertp.bypass.playtime`).
+
+## [1.9.1] — 2026-11-26
+
+### Added
+- `warmup-skip` in `worlds.yml`: no warmup when `/rtp` starts from the listed worlds (a spawn square). With `only-where-pvp-is-off: true` (default) only where WorldGuard denies PvP at the player's spot.
 
 ## [1.8.1] — 2026-11-22
 
